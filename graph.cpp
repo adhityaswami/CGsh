@@ -28,7 +28,20 @@ void graph::randomWeightGenerator() {
 		srand((int)time(NULL));
 		for (int i = 0; i < adj.size(); i++) {
 			for (int j = 1; j < adj[i].size(); j++) {
-				adj[i][j].edgeweight = rand() % 100;
+				if(adj[i][j].edgeweight == 1) {
+					int weight = rand() % 100;
+					adj[i][j].edgeweight = weight;
+					int newdata = adj[i][j].data;
+					for(int a = 0; a < adj.size(); a++) {
+						if(adj[a][0].data == newdata) {
+							for(int b = 1; b < adj[a].size(); b++) {
+								if(adj[a][b].data == adj[i][0].data) {
+									adj[a][b].edgeweight = weight;
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -103,6 +116,7 @@ graph::graph(int vertices, int edges) {
 				continue;
 			}
 		}
+		this -> edges = edges;
 	}
 }
 
